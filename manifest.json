@@ -1,0 +1,72 @@
+{
+    "name": "youtube+ light",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "youtube functions",
+    "icons": {
+        "128": "images/dfp-ico.png"
+    },
+//_Media_Next_Track, _Media_Previous_Track, _Media_Stop, _Media_Play_Pause
+    "commands": {
+        "yt-next": {
+            "suggested_key": {
+                "default": "Ctrl+.",
+                "mac": "Command+.",
+                "chromeos": "Ctrl+.",
+                "windows": "Ctrl+.",
+                "linux": "Ctrl+."
+            },
+            "description": "youtube next",
+            "global": true
+        },
+        "yt-prev": {
+            "suggested_key": {
+                "default": "Ctrl+,",
+                "mac": "Command+,",
+                "chromeos": "Ctrl+,",
+                "windows": "Ctrl+,",
+                "linux": "Ctrl+,"
+            },
+            "description": "youtube previous",
+            "global": true
+        },
+        "yt-pause-play": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Space",
+                "mac": "Command+Shift+Space",
+                "chromeos": "Ctrl+Shift+Space",
+                "windows": "Ctrl+Shift+Space",
+                "linux": "Ctrl+Shift+Space"
+            },
+            "description": "youtube pause/play",
+            "global": true
+        },
+    }
+
+    "chrome_url_overrides" : {
+        "newtab": "newTab.html"
+    },
+
+    "options_page": "options.html",
+    "permissions": [
+        "topSites",
+        "webRequest",
+        "pageCapture",
+        "http://*/*",
+        "https://*/*"
+    ],
+
+    "content_scripts": [{
+        "matches": ["http://*youtube*", "https://*youtube*"],
+        "js": ["scripts/jquery-2.1.3.min.js", "content_frame.js"],
+        "run_at" : "document_end",
+        // "all_frames": true
+    }],
+
+    "background": { "scripts": ["scripts/jquery-2.1.3.min.js","background.js"] },
+    "browser_action": {
+        "default_icon": "images/dfp-popup.png",
+        "default_title": "youtube+ light",
+        "default_popup": "popout.html"
+    }
+}
