@@ -12,33 +12,33 @@
         // "enable_media_keys": true,
         "yt-next": {
             "suggested_key": {
-                "default": "Ctrl+Period",
-                "mac": "Command+Period",
+                "default": "Ctrl+Shift+Period",
+                "mac": "Command+Shift+Period",
                 // "chromeos": "Ctrl+.",
-                "windows": "Ctrl+Period",
-                "linux": "Ctrl+Period"
+                "windows": "Ctrl+Shift+Period",
+                "linux": "Ctrl+Shift+Period"
             },
             "description": "youtube next",
             "global": true
         },
         "yt-prev": {
             "suggested_key": {
-                "default": "Ctrl+Comma",
-                "mac": "Command+Comma",
+                "default": "Ctrl+Shift+U",
+                "mac": "Command+Shift+U",
                 // "chromeos": "Ctrl+,",
-                "windows": "Ctrl+Comma",
-                "linux": "Ctrl+Comma"
+                "windows": "Ctrl+Shift+U",
+                "linux": "Ctrl+Shift+U"
             },
             "description": "youtube previous",
             "global": true
         }
         // "yt-pause-play": {
         //     "suggested_key": {
-        //         "default": "Ctrl+Shift+p",
-        //         "mac": "Command+Shift+p",
+        //         "default": "Ctrl+Shift+/",
+        //         "mac": "Command+Shift+/",
         //         // "chromeos": "Ctrl+Shift+Space",
-        //         "windows": "Ctrl+Shift+p",
-        //         "linux": "Ctrl+Shift+p"
+        //         "windows": "Ctrl+Shift+/",
+        //         "linux": "Ctrl+Shift+/"
         //     },
         //     "description": "youtube pause/play",
         //     "global": true
