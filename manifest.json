@@ -31,18 +31,18 @@
             },
             "description": "youtube previous",
             "global": true
+        },
+        "yt-pause-play":{
+            "suggested_key": {
+                "default": "Ctrl+Shift+8",
+                "mac": "Command+Shift+8",
+                // "chromeos": "Ctrl+Shift+Space",
+                "windows": "Ctrl+Shift+8",
+                "linux": "Ctrl+Shift+8"
+            },
+            "description": "youtube pause/play",
+            "global": true
         }
-        // "yt-pause-play": {
-        //     "suggested_key": {
-        //         "default": "Ctrl+Shift+p",
-        //         "mac": "Command+Shift+p",
-        //         // "chromeos": "Ctrl+Shift+Space",
-        //         "windows": "Ctrl+Shift+p",
-        //         "linux": "Ctrl+Shift+p"
-        //     },
-        //     "description": "youtube pause/play",
-        //     "global": true
-        // }
     },
 
     "chrome_url_overrides":{
