@@ -7,27 +7,27 @@
         "128": "images/dfp-ico.png"
     },
 //_Media_Next_Track, _Media_Previous_Track, _Media_Stop, _Media_Play_Pause
-// MediaKeyPlayPause, MediaKeyPrevious, MediaKeyNext, and MediaKeyStop
+// Media Next Track, Media Play/Pause, Media Previous Track, and Media Stop
     "commands": {
         // "enable_media_keys": true,
         "yt-next": {
             "suggested_key": {
-                "default": "Ctrl+Period",
+                "default": "Ctrl+Shift+0",
                 "mac": "Command+Period",
                 // "chromeos": "Ctrl+.",
-                "windows": "Ctrl+Period",
-                "linux": "Ctrl+Period"
+                "windows": "Ctrl+Shift+0",
+                "linux": "Ctrl+Shift+0"
             },
             "description": "youtube next",
             "global": true
         },
         "yt-prev": {
             "suggested_key": {
-                "default": "Ctrl+Comma",
+                "default": "Ctrl+Shift+9",
                 "mac": "Command+Comma",
                 // "chromeos": "Ctrl+,",
-                "windows": "Ctrl+Comma",
-                "linux": "Ctrl+Comma"
+                "windows": "Ctrl+Shift+9",
+                "linux": "Ctrl+Shift+9"
             },
             "description": "youtube previous",
             "global": true
