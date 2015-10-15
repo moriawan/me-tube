@@ -7,42 +7,45 @@
         "128": "images/dfp-ico.png"
     },
 //_Media_Next_Track, _Media_Previous_Track, _Media_Stop, _Media_Play_Pause
-// MediaKeyPlayPause, MediaKeyPrevious, MediaKeyNext, and MediaKeyStop
+// Media Next Track, Media Play/Pause, Media Previous Track, and Media Stop
     "commands": {
         // "enable_media_keys": true,
         "yt-next": {
             "suggested_key": {
-                "default": "Ctrl+Shift+Period",
-                "mac": "Command+Shift+Period",
+
+                "default": "Ctrl+Shift+0",
+                "mac": "Command+Period",
                 // "chromeos": "Ctrl+.",
-                "windows": "Ctrl+Shift+Period",
-                "linux": "Ctrl+Shift+Period"
+                "windows": "Ctrl+Shift+0",
+                "linux": "Ctrl+Shift+0"
             },
             "description": "youtube next",
             "global": true
         },
         "yt-prev": {
             "suggested_key": {
-                "default": "Ctrl+Shift+U",
-                "mac": "Command+Shift+U",
+
+                "default": "Ctrl+Shift+9",
+                "mac": "Command+Comma",
                 // "chromeos": "Ctrl+,",
-                "windows": "Ctrl+Shift+U",
-                "linux": "Ctrl+Shift+U"
+                "windows": "Ctrl+Shift+9",
+                "linux": "Ctrl+Shift+9"
             },
             "description": "youtube previous",
             "global": true
+        },
+        "yt-pause-play":{
+            "suggested_key": {
+                "default": "Ctrl+Shift+8",
+                "mac": "Command+Shift+8",
+                // "chromeos": "Ctrl+Shift+Space",
+                "windows": "Ctrl+Shift+8",
+                "linux": "Ctrl+Shift+8"
+            },
+            "description": "youtube pause/play",
+            "global": true
         }
-        // "yt-pause-play": {
-        //     "suggested_key": {
-        //         "default": "Ctrl+Shift+/",
-        //         "mac": "Command+Shift+/",
-        //         // "chromeos": "Ctrl+Shift+Space",
-        //         "windows": "Ctrl+Shift+/",
-        //         "linux": "Ctrl+Shift+/"
-        //     },
-        //     "description": "youtube pause/play",
-        //     "global": true
-        // }
+
     },
 
     "chrome_url_overrides":{
