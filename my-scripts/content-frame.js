@@ -71,7 +71,7 @@ sidebarController.prototype.pushCurrent =  function(){
 
 
 
- var uriChange = function(){
+ var uriChange = function(callBack){
 
     this.oldHash = window.location.hash;
     this.Check;
@@ -81,7 +81,8 @@ sidebarController.prototype.pushCurrent =  function(){
         if(that.oldHash!=window.location.href){
             // alert("HASH CHANGED - new has" + window.location.hash);
 
-            sc.pushCurrent();
+            if(typeof callBack === "function")
+                callBack();
 
             that.oldHash = window.location.href;
         }
@@ -93,7 +94,7 @@ sidebarController.prototype.pushCurrent =  function(){
 
 if(window.location.origin.indexOf("youtube") > 0){
     var sc =  new sidebarController();
-    var uriChangeObj = new uriChange();
+    var uriChangeObj = new uriChange(sc.pushCurrent());
 }
 
 
