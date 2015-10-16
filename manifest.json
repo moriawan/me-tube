@@ -61,7 +61,7 @@
 
     "content_scripts": [{
         "matches":["http://*/*", "https://*/*"],
-        "js": ["scripts/jquery-2.1.3.min.js", "my-scripts/content-frame.js"],
+        "js": ["my-scripts/content-frame.js"],
         "run_at" : "document_end"
         // "all_frames": true
     }],

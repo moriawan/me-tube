@@ -1,4 +1,51 @@
 
+function pushController(){
+    
+    return;
+
+    var elem = document.createElement("div");
+    elem.className = "metube-control";
+
+    elem.style.position = "fixed";
+    elem.style.width = "500px";
+    elem.style.height = "50px";
+    elem.style.backgroundColor = "rgba(0, 0, 0, 0.61)";
+    elem.style.bottom = "20px";
+    elem.style.left = "20px";
+    elem.style.borderRadius= "10px";
+                
+    
+    var playButt = document.createElement("div");
+    playButt.className = "metube-play-button"
+
+    playButt.style.backgroundImage = "url('../icons/play.png')";
+    playButt.style.position = "absolute";
+
+    var pauseButt = document.createElement("div");
+
+    pauseButt.className = "metube-pause-button"
+
+
+    pauseButt.style.backgroundImage = "url('../icons/play.png')"
+    pauseButt.style.position = "absolute";
+
+    elem.appendChild(playButt);
+    elem.appendChild(pauseButt);
+
+
+    var body = document.getElementsByTagName("body")[0];
+
+    body.appendChild(elem);
+
+    console.log(elem);
+
+}
+
+
+
+// $("#watch7-sidebar-contents")
+
+
 function simulateClick(el) {
     var evt;
     if (document.createEvent) {
@@ -7,12 +54,6 @@ function simulateClick(el) {
     }
     (evt) ? el.dispatchEvent(evt) : (el.click && el.click());
 }
-
-// var foo = document.getElementById("hey");
-
-// foo.onclick = function () {alert("bar");}
-
-// simulateClick("hey");
 
 
 var onMessageListener = function(message, sender, sendResponse) {
@@ -34,7 +75,7 @@ var onMessageListener = function(message, sender, sendResponse) {
 
                 if(prev.indexOf("youtube.com") > 0)
                     window.history.back();
-                
+
             }
 
             break;
@@ -48,6 +89,8 @@ var onMessageListener = function(message, sender, sendResponse) {
     return true;
 }
 
+
+pushController();
 
 chrome.runtime.onMessage.addListener(onMessageListener);
 
