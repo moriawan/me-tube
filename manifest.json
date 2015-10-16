@@ -12,6 +12,7 @@
         // "enable_media_keys": true,
         "yt-next": {
             "suggested_key": {
+
                 "default": "Ctrl+Shift+0",
                 "mac": "Command+Period",
                 // "chromeos": "Ctrl+.",
@@ -23,6 +24,7 @@
         },
         "yt-prev": {
             "suggested_key": {
+
                 "default": "Ctrl+Shift+9",
                 "mac": "Command+Comma",
                 // "chromeos": "Ctrl+,",
@@ -43,6 +45,7 @@
             "description": "youtube pause/play",
             "global": true
         }
+
     },
 
     "chrome_url_overrides":{
