@@ -57,6 +57,13 @@ function simulateClick(el) {
 
 function fromOld(){
     return false;
+
+
+    if(sessionStorage["sideBarPage"] !== "undefined" && parseInt(sessionStorage["sideBarPage"]) == 0 ){
+        return true;
+    }
+    else return false;
+
 }
 
 function remove(element) {
@@ -153,7 +160,7 @@ sidebarController.prototype.sideBarPage = function(){
 
 sidebarController.prototype.resolveCurrent =  function(){
 
-    console.log( "changing current watchBar", this.sideBarPage() );
+    // console.log( "changing current watchBar", this.sideBarPage() );
 
     console.log( localArray.getLocalAt( "watchBar", this.sideBarPage() )["html"] );
 
@@ -173,15 +180,11 @@ sidebarController.prototype.pushCurrent =  function(){
 
     localArray.pushLocal( "watchBar", { "html" : encodeURI( watchBarContent.innerHTML ), "url" : window.location.href });
 
-    if(fromOld()){
-        sessionStorage["sideBarPage"] = 0;
-        this.resolveCurrent();
-    }
-    else sessionStorage["sideBarPage"] = 1;
-
-
     // add buttons
 
+    if(fromOld()){
+        this.resolveCurrent()
+    }
 
     for(var i =1; i < 3 ; i++){
 
