@@ -13,17 +13,17 @@ function pushController(){
     elem.style.bottom = "20px";
     elem.style.left = "20px";
     elem.style.borderRadius= "10px";
-                
-    
+            
+            
     var playButt = document.createElement("div");
-    playButt.className = "metube-play-button"
+    playButt.className = "metube-play-button";
 
     playButt.style.backgroundImage = "url('../icons/play.png')";
     playButt.style.position = "absolute";
 
     var pauseButt = document.createElement("div");
 
-    pauseButt.className = "metube-pause-button"
+    pauseButt.className = "metube-pause-button";
 
 
     pauseButt.style.backgroundImage = "url('../icons/play.png')"
@@ -53,6 +53,17 @@ function simulateClick(el) {
 }
 
 
+///// auxillary functions /////
+
+function fromOld(){
+    return false;
+}
+
+function remove(element) {
+    element.parentNode.removeChild(element);
+}
+
+//////////////////////////////
 
 var onMessageListener = function(message, sender, sendResponse) {
 
@@ -102,31 +113,28 @@ var sidebarController = function(){
 
 sidebarController.prototype.pageChange = function(direction, pages){
 
-    if(typeof pages === "undefined"){
+    if(direction == "left" && sessionStorage["sideBarPage"] == 1 ){
+
+        sessionStorage["sideBarPage"] = 0;
+        document.getElementById("metube-right7").style.display = "block";
+        document.getElementById("metube-left7").style.display = "none";
         
-        if(direction == "left"){
-            pages = -1;
-        }
-        else if(direction == "right"){
-            pages = 1;
-        }
+        this.resolveCurrent.call(this);
+
+    }
+    else if(direction == "right"  && sessionStorage["sideBarPage"] == 0 ){
+
+        sessionStorage["sideBarPage"] = 1;
+        document.getElementById("metube-right7").style.display = "none";
+        document.getElementById("metube-left7").style.display = "block";
+
+        this.resolveCurrent.call(this);
+
     }
 
-    console.log("pages", pages);
 
-    if(typeof sessionStorage["sideBarPage"] === "undefined"){
-        sessionStorage["sideBarPage"] = 0;
-    }
-    else if(parseInt(sessionStorage["sideBarPage"]) + pages > 0){
-        sessionStorage["sideBarPage"] = parseInt(sessionStorage["sideBarPage"]) + pages;
-    }
-    else {
-        sessionStorage["sideBarPage"] = 0;
-    }
+    console.log(  "page change dir ", direction , "this", this )
 
-    console.log( pages, "page change dir ", direction , "this", this )
-
-    this.resolveCurrent().apply(this);
 
 }
 
@@ -158,49 +166,71 @@ sidebarController.prototype.pushCurrent =  function(){
 
     console.log("push current");
 
+    // watchBarContent = { innerHTML : ' +sessionStorage["sideBarPage"]' + sessionStorage["sideBarPage"] }
     watchBarContent = document.getElementById("watch7-sidebar-modules");
 
     console.log("pushSidebar current", watchBarContent.innerHTML, encodeURI( watchBarContent.innerHTML ) );
 
     localArray.pushLocal( "watchBar", { "html" : encodeURI( watchBarContent.innerHTML ), "url" : window.location.href });
 
-    // add buttons
-    
-    if(typeof sessionStorage["sideBarPage"] === "undefined"){
+    if(fromOld()){
         sessionStorage["sideBarPage"] = 0;
+        this.resolveCurrent();
     }
-    else sessionStorage["sideBarPage"] = parseInt(sessionStorage["sideBarPage"]) + 1;
-
-    var elem = document.createElement("div");
-    elem.id = "metube-left7";
-
-    elem.style.position ="fixed";
-    elem.style.height = "50px";
-    elem.style.width = "50px";
-
-    elem.style.top = "50px";
-    elem.style.right = "50px";
-
-    elem.style.backgroundColor = "red"
-
-    console.log(this, "this from class def")
-
-    elem.addEventListener('click', function(){
-       
-        console.log("sc page change, left", this);
-        this.pageChange("left").apply(this);
-
-    }.bind(this), false)
-
-    body.appendChild(elem);
+    else sessionStorage["sideBarPage"] = 1;
 
 
-    // var target = document.getElementsByTagName("body")[0];
-    // var id = "eow-title";
-
-    // var ob = domObserver.newObserver(target, id, bindListners);
+    // add buttons
 
 
+    for(var i =1; i < 3 ; i++){
+
+
+        var elem = document.createElement("div");
+        
+        elem.style.position ="fixed";
+        elem.style.height = "50px";
+        elem.style.width = "50px";
+
+        elem.style.top = "50px";
+        elem.style.backgroundColor = "red"
+        
+        if(i==1){
+            
+            var d = document.getElementById("metube-left7");
+
+            if(d){console.log("22")}
+
+            elem.id = "metube-left7";
+            elem.style.right = "110px";
+
+            elem.addEventListener('click', function(){
+               
+                console.log("sc page change, left", this.pageChange);
+                this.pageChange.call(this, "left");
+
+            }.bind(this), false)
+        }
+        else{
+            elem.id = "metube-right7";
+            elem.style.right = "50px";
+
+            elem.addEventListener('click', function(){
+
+                console.log("sc page change, left", this);
+                this.pageChange.call(this, "right");
+            
+            }.bind(this), false)
+        }
+        
+        // console.log("control pushed", elem)
+
+        body.appendChild(elem);
+
+    }
+
+
+    
 }
 
 
@@ -210,7 +240,7 @@ var localArray = {
 
     "pushLocal" : function(key, obj){
 
-        console.log("pushing into sessionStorage", key, obj);
+        // console.log("pushing into sessionStorage", key, obj);
 
         if(typeof sessionStorage[key] !== "undefined"){
             
@@ -218,17 +248,26 @@ var localArray = {
             sessionArray = JSON.parse( sessionStorage[key] );
 
             if(sessionArray instanceof Array ){
-                sessionArray.push(  obj );
                 
-                if(sessionArray.length > 5)
-                    sessionArray.shift();
+                if(sessionArray.length > 1){
 
+                    if( fromOld() ){
+                        sessionArray.pop();
+                    }
+                    else{
+                        sessionArray.shift();
+                    }
+                }
+                
+                sessionArray.push(  obj );
                 console.log("pushed into existing");
+
             }
             else console.log("failed push into existing");
         }
         else {
             sessionArray = [ obj ] ;
+            console.log("content new sessionArray ", sessionArray);
         }
 
         sessionStorage[key] = JSON.stringify( sessionArray );
@@ -295,19 +334,14 @@ var domObserver = {
 
     newObserver : function(target, id, params, callback){
     
-        // have the observer observe foo for changes in children
 
         console.log( "observer", target, id);
 
         var obs = new MutationObserver(function(mutations, observer) {
-            // look through all mutations that just occured
             for(var i=0; i<mutations.length; ++i) {
-                // look through all added nodes of this mutation
                 
-                // console.log( "mutations", mutations)
 
                 for(var j=0; j<mutations[i].addedNodes.length; ++j) {
-                    // was a child added with ID of 'bar'?
                     
                     // console.log( mutations[i].addedNodes[j].id, "added" );
                     // console.log( "compare to ", id );
@@ -361,7 +395,7 @@ if(window.location.origin.indexOf("youtube") > 0){
 
     window.ob = domObserver.newObserver(target, id, params, afterContainer);
 
-    // sc.pushCurrent().bind(sc);
+    sc.pushCurrent.call(sc);
 
 }
 
@@ -370,13 +404,13 @@ function afterContainer(){
     
     // sc.pushCurrent.bind(sc);
     
-    window.ob.disconnect();
+    // window.ob.disconnect();
     
     // alert();
 
     var params = {
            childList:true, 
-           log:true,
+           // log:true,
            subtree:true
         }
 
