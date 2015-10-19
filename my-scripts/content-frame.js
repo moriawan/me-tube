@@ -455,3 +455,12 @@ function afterContainer(){
 //     this.Check = setInterval(function(){ detect() }, 100);
 // }
 
+
+
+chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
+  
+  console.log(response.farewell);
+
+});
+
+
