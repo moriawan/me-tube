@@ -4,14 +4,7 @@
 
 //ytp-next-button ytp-button
 
-chrome.topSites.get(function(urlList){
-    console.log(urlList);
-})
-
-
-chrome.commands.onCommand.addListener(function(command) {
-
-    console.log("command", command);
+var dispatchCommand = function(command){
 
     if(chrome && chrome.runtime) {
 
@@ -25,6 +18,31 @@ chrome.commands.onCommand.addListener(function(command) {
             })
         })
     }
+}
+
+
+chrome.topSites.get(function(urlList){
+    console.log(urlList);
+})
+
+
+chrome.commands.onCommand.addListener(function(command) {
+
+    console.log("command", command);
+    dispatchCommand(command)
 
 });
 
+
+
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+
+    console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
+
+    if (request.type == "playerButton"){
+        dispatchCommand(request.command);
+    }
+
+  });

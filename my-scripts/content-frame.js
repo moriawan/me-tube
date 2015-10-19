@@ -522,3 +522,34 @@ if(window.location.origin.indexOf("youtube") > 0){
 
 }
 
+function controllerButton(){
+    
+    param = {
+        "type": "playerButton",
+        
+    }
+
+    switch(this.id){
+        case "metube-next-button":
+            param["command"] = "yt-next";
+            break;
+        case "metube-prev-button":
+            param["command"] ="yt-prev";
+            break;
+        case "metube-pause-button":
+            param["command"] = "yt-pause-play";
+            break;
+        case "metube-play-button":
+            param["command"] = "yt-pause-play";
+            break;
+
+    }
+
+    chrome.runtime.sendMessage(param, function(response) {
+      console.log(response);
+    });
+
+}
+
+
+
