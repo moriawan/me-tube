@@ -6,6 +6,11 @@
     "icons": {
         "128": "images/dfp-ico.png"
     },
+    "web_accessible_resources": [
+        "images/*.*",
+        "icons/*.*"
+    ],
+
 //_Media_Next_Track, _Media_Previous_Track, _Media_Stop, _Media_Play_Pause
 // Media Next Track, Media Play/Pause, Media Previous Track, and Media Stop
     "commands": {

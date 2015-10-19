@@ -1,7 +1,20 @@
 
-function pushController(){
+function setCommonButtonStyle(buttonElem, param){
+
+    buttonElem.style.backgroundSize = "contain";
+
+    buttonElem.style.position = "absolute";
+    buttonElem.style.top = "0px";
+    buttonElem.style.left = "50px";
+
+    buttonElem.style.width = "50px";
+    buttonElem.style.height = "50px";
     
-    return;
+    return buttonElem;
+}
+
+
+function pushPlayerController(){
 
     var elem = document.createElement("div");
     elem.className = "metube-control";
@@ -9,28 +22,65 @@ function pushController(){
     elem.style.position = "fixed";
     elem.style.width = "500px";
     elem.style.height = "50px";
-    elem.style.backgroundColor = "rgba(0, 0, 0, 0.61)";
+    elem.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
     elem.style.bottom = "20px";
     elem.style.left = "20px";
     elem.style.borderRadius= "10px";
             
+
+
             
     var playButt = document.createElement("div");
     playButt.className = "metube-play-button";
 
-    playButt.style.backgroundImage = "url('../icons/play.png')";
-    playButt.style.position = "absolute";
+    setCommonButtonStyle(playButt);
+
+    playButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/play.png') + "')";
+    playButt.style.opacity = "0.85"
+
+    
 
     var pauseButt = document.createElement("div");
-
     pauseButt.className = "metube-pause-button";
 
+    setCommonButtonStyle(pauseButt);
+   
+    pauseButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/pause.png') + "')";
+    pauseButt.style.opacity = "0.75"
+    pauseButt.style.display = "none";
 
-    pauseButt.style.backgroundImage = "url('../icons/play.png')"
-    pauseButt.style.position = "absolute";
+
+    
+
+    var nextButt = document.createElement("div");
+    nextButt.className = "metube-pause-button";
+
+    setCommonButtonStyle(nextButt);
+   
+    nextButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/next.png') + "')";
+    nextButt.style.opacity = "0.9"
+    nextButt.style.left = "100px";
+    // nextButt.style.display = "none";
+
+
+
+    var prevButt = document.createElement("div");
+    prevButt.className = "metube-pause-button";
+
+    setCommonButtonStyle(prevButt);
+   
+    prevButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/prev.png') + "')";
+    prevButt.style.opacity = "0.9"
+    prevButt.style.left = "0px";
+    // prevButt.style.display = "none";
+
+
+
 
     elem.appendChild(playButt);
     elem.appendChild(pauseButt);
+    elem.appendChild(nextButt);
+    elem.appendChild(prevButt);
 
 
     var body = document.getElementsByTagName("body")[0];
@@ -56,8 +106,6 @@ function simulateClick(el) {
 ///// auxillary functions /////
 
 function fromOld(){
-    return false;
-
 
     if(sessionStorage["sideBarPage"] !== "undefined" && parseInt(sessionStorage["sideBarPage"]) == 0 ){
         return true;
@@ -107,11 +155,6 @@ var onMessageListener = function(message, sender, sendResponse) {
 }
 
 
-pushController();
-
-chrome.runtime.onMessage.addListener(onMessageListener);
-
-
 
 var sidebarController = function(){
 
@@ -139,9 +182,7 @@ sidebarController.prototype.pageChange = function(direction, pages){
 
     }
 
-
     console.log(  "page change dir ", direction , "this", this )
-
 
 }
 
@@ -149,7 +190,7 @@ sidebarController.prototype.pageChange = function(direction, pages){
 
 sidebarController.prototype.sideBarPage = function(){
 
-    if(typeof sessionStorage["sideBarPage"] === "undefined"){
+    if(!("sideBarPage" in sessionStorage)){
         sessionStorage["sideBarPage"] = 0;
     }
 
@@ -162,50 +203,76 @@ sidebarController.prototype.resolveCurrent =  function(){
 
     // console.log( "changing current watchBar", this.sideBarPage() );
 
-    console.log( localArray.getLocalAt( "watchBar", this.sideBarPage() )["html"] );
+    // console.log( localArray.getLocalAt( "watchBar", this.sideBarPage() )["html"] );
 
     document.getElementById("watch7-sidebar-modules").innerHTML = decodeURI(localArray.getLocalAt( "watchBar", this.sideBarPage() )["html"]);
 
 }
 
 
-sidebarController.prototype.pushCurrent =  function(){
+sidebarController.prototype.pushCurrent =  function(noUI){
+
+    if(typeof noUI === "undefined")
+        noUI = false;
 
     console.log("push current");
 
     // watchBarContent = { innerHTML : ' +sessionStorage["sideBarPage"]' + sessionStorage["sideBarPage"] }
     watchBarContent = document.getElementById("watch7-sidebar-modules");
 
-    console.log("pushSidebar current", watchBarContent.innerHTML, encodeURI( watchBarContent.innerHTML ) );
+    // console.log("pushSidebar current", watchBarContent.innerHTML, encodeURI( watchBarContent.innerHTML ) );
 
     localArray.pushLocal( "watchBar", { "html" : encodeURI( watchBarContent.innerHTML ), "url" : window.location.href });
 
     // add buttons
 
     if(fromOld()){
-        this.resolveCurrent()
+        alert("from old reject change");
+        this.resolveCurrent();
     }
 
+    if( !("sideBarPage" in sessionStorage)){
+        sessionStorage["sideBarPage"] = 1;
+    }
+    
+
+    console.log("sidebarpage", sessionStorage["sideBarPage"])
+
+    if(noUI)
+        return;
+
+
     for(var i =1; i < 3 ; i++){
+   
+    // position: absolute;
+    // z-index: 100;
+    // height: 98%;
+    // width: 10px;
+    // top: 1%;
+    // left: -8px;
+    // display: block;
+    // background-color: rgba(230, 33, 23, 0.54902);
 
 
         var elem = document.createElement("div");
         
-        elem.style.position ="fixed";
-        elem.style.height = "50px";
-        elem.style.width = "50px";
+        elem.style.position ="absolute";
+        elem.style.zIndex = 100;
+        elem.style.height = "98%";
+        elem.style.width = "10px";
 
-        elem.style.top = "50px";
-        elem.style.backgroundColor = "red"
+        elem.style.top = "1%";
+        elem.style.backgroundColor = "rgba(230, 33, 23, 0.54902)"
         
         if(i==1){
             
-            var d = document.getElementById("metube-left7");
-
-            if(d){console.log("22")}
 
             elem.id = "metube-left7";
-            elem.style.right = "110px";
+            elem.style.left = "-8px";
+
+            if(fromOld()){
+                elem.style.display = "none" ;
+            }
 
             elem.addEventListener('click', function(){
                
@@ -216,7 +283,12 @@ sidebarController.prototype.pushCurrent =  function(){
         }
         else{
             elem.id = "metube-right7";
-            elem.style.right = "50px";
+            elem.style.right = "-8px";
+
+            if(!fromOld()){
+                elem.style.display = "none" ;
+            }
+            
 
             elem.addEventListener('click', function(){
 
@@ -228,7 +300,13 @@ sidebarController.prototype.pushCurrent =  function(){
         
         // console.log("control pushed", elem)
 
-        body.appendChild(elem);
+        var existElem = document.getElementById(elem.id);
+
+        if(existElem){
+            existElem.parentNode.removechild(existElem)
+        }
+
+        document.getElementById("watch7-sidebar").appendChild(elem);
 
     }
 
@@ -379,6 +457,48 @@ var domObserver = {
 
 }
 
+
+
+
+
+
+
+
+///////////////////////////////////// run //////////////////////
+
+
+
+
+
+pushPlayerController();
+
+chrome.runtime.onMessage.addListener(onMessageListener);
+
+var afterContainer = function(){
+    
+    var params = {
+           childList:true, 
+           // log:true,
+           subtree:true
+        }
+
+    var target = document.getElementById("watch7-container")
+    var id = "watch7-main-container";
+
+    window.obs = domObserver.newObserver(target, id, params, function(){
+        console.log(document.getElementById("watch7-sidebar-modules"));
+
+        window.sc.pushCurrent.call(sc);
+        // alert()
+    });
+
+    console.log("new observer bound");
+
+
+}
+
+
+
 if(window.location.origin.indexOf("youtube") > 0){
 
     console.log("sidebar init");
@@ -398,60 +518,7 @@ if(window.location.origin.indexOf("youtube") > 0){
 
     window.ob = domObserver.newObserver(target, id, params, afterContainer);
 
-    sc.pushCurrent.call(sc);
+    sc.pushCurrent.call(sc, true);
 
 }
-
-
-function afterContainer(){
-    
-    // sc.pushCurrent.bind(sc);
-    
-    // window.ob.disconnect();
-    
-    // alert();
-
-    var params = {
-           childList:true, 
-           // log:true,
-           subtree:true
-        }
-
-    var target = document.getElementById("watch7-container")
-    var id = "watch7-main-container";
-
-    window.obs = domObserver.newObserver(target, id, params, function(){
-        console.log(document.getElementById("watch7-sidebar-modules"));
-
-        window.sc.pushCurrent().bind(sc);
-        // alert()
-    });
-
-    console.log("new observer bound");
-
-
-}
-
-//  var uriChange = function(callBack){
-
-//     this.oldHash = window.location.hash;
-
-//     var that = this;
-//     var detect = function(){
-//         if(that.oldHash!=window.location.href){
-//             // alert("HASH CHANGED - new has" + window.location.hash);
-
-//             console.log("uri changed")
-
-//             if(typeof callBack === "function")
-//                 callBack();
-
-            
-
-//             that.oldHash = window.location.href;
-//         }
-//     }
-
-//     this.Check = setInterval(function(){ detect() }, 100);
-// }
 
