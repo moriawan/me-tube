@@ -262,7 +262,7 @@ sidebarController.prototype.pushCurrent =  function(noUI){
         elem.style.width = "10px";
 
         elem.style.top = "1%";
-        elem.style.backgroundColor = "rgba(230, 33, 23, 0.54902)"
+        elem.style.backgroundColor = "rgba(123, 199, 0, 0.29)"
         
         if(i==1){
             
