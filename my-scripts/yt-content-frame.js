@@ -334,7 +334,7 @@ var sendResponse = function(){
 var onMessageListener = function(message, sender, sendResponse) {
 
     
-    if(message.type == "playerButton"){
+    if(message.type == "playerAction"){
     
         console.log(message, "atleast show thiss");
     

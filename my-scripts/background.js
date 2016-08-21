@@ -38,7 +38,7 @@ chrome.topSites.get(function(urlList){
 
 chrome.commands.onCommand.addListener(function(command) {
 
-    dispatchCommand({'type':'playerButton', 'command':command})
+    dispatchCommand({'type':'playerAction', 'command':command})
 
 });
 
@@ -55,7 +55,7 @@ chrome.runtime.onMessage.addListener(
         return;
     }
 
-    if (request.type == "playerButton"){
+    if (request.type == "playerAction"){
         dispatchCommand(request.command);
     }
     else if(request.type == "propagate"){
@@ -64,4 +64,4 @@ chrome.runtime.onMessage.addListener(
 
 });
 
-// dispatchCommand({'type':'playerButton', 'command':'yt-next'})
+// dispatchCommand({'type':'playerAction', 'command':'yt-next'})

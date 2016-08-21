@@ -117,7 +117,7 @@ pushPlayerController();
 function controllerButton(){
     
     param = {
-        "type": "playerButton",
+        "type": "playerAction",
         
     }
 
