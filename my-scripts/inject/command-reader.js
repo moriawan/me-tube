@@ -57,7 +57,6 @@ document.addEventListener("metubeEvent", function(message) {
 	        case "play":
 	            break;
 	        case "yt-seek":
-		        console.log("seek request", message.detail.time);
 		        playerRef.seekTo(message.detail.time);
 	            break;
 	        case "change":
