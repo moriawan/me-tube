@@ -18,7 +18,7 @@ function dispatchCustomEvent(doc) {
 }
 
 
-playerRef = yt.player.getPlayerByElement("player-api")
+playerRef = yt.player.getPlayerByElement("player-api");
 
 playerRef.addEventListener("onStateChange", "onPlayerStateChange");
 
@@ -47,22 +47,25 @@ var playerStatePropagate = setInterval(function() {
 // metubeEvent
 
 
-// document.addEventListener("metubeEvent", function(message) {
-//     console.log("message recieved from extension", message)
+document.addEventListener("metubeEvent", function(message) {
+    console.log("message recieved from extension", message)
 
-//     switch(message.type){
-//         case "pause":
-//             break;
-//         case "play":
-//             break;
-//         case "seek":
-//             break;
-//         case "change":
-//             break;
-//         case "cue":
-//             break;
+    if(message.type == "metubeEvent"){
+	    switch(message.detail.command){
+	        case "pause":
+	            break;
+	        case "play":
+	            break;
+	        case "yt-seek":
+		        console.log("seek request", message.detail.time);
+		        playerRef.seekTo(message.detail.time);
+	            break;
+	        case "change":
+	            break;
+	        case "cue":
+	            break;
 
-//     }
-
-// });
+	    }
+    }
+});
 

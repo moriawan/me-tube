@@ -1,30 +1,20 @@
-// ytp-next-button
-// ytp-play-button
-// ytp-prev-button
 
-//ytp-next-button ytp-button
+var dispatchCommand = function(request){
 
-var dispatchCommand = function(commandObj){
-
-    console.log(commandObj, chrome, chrome.runtime)
-    if(chrome && chrome.runtime) {
-        chrome.tabs.query({url: "*://www.youtube.com/*"}, function(tabs){
-            tabs.forEach(function(tab, index){
-                chrome.tabs.sendMessage(tab.id, commandObj, function(){
-                    console.log("dispatched ",{"ori gin":"youtube+", "command":commandObj}, "to", tab.title)
-                })
+    chrome.tabs.query({url: "*://www.youtube.com/*"}, function(tabs){
+        tabs.forEach(function(tab, index){
+            chrome.tabs.sendMessage(tab.id, request, function(){
+                console.log("dispatched ",{"ori gin":"youtube+", "command":request}, "to", tab.title)
             })
         })
-    }
+    })
 }
 
-var propogateState = function(stateObj){
+var propogateState = function(request){
     
     chrome.tabs.query({url: "*://*/*"}, function(tabs){
         tabs.forEach(function(tab, index){
-            // console.log(tab, tab.id);
-
-            chrome.tabs.sendMessage(tab.id, stateObj, function(){
+            chrome.tabs.sendMessage(tab.id, request, function(){
                 // console.log("dispatched ",{"origin":"youtube+", "command":command}, "to", tab.title)
             })
         })
@@ -38,7 +28,12 @@ chrome.topSites.get(function(urlList){
 
 chrome.commands.onCommand.addListener(function(command) {
 
-    dispatchCommand({'type':'playerAction', 'command':command})
+    dispatchCommand({
+        'type':'playerAction',
+        'message' : {
+            'command':command
+            }
+        });
 
 });
 
@@ -56,7 +51,7 @@ chrome.runtime.onMessage.addListener(
     }
 
     if (request.type == "playerAction"){
-        dispatchCommand(request.command);
+        dispatchCommand(request);
     }
     else if(request.type == "propagate"){
         propogateState(request)
