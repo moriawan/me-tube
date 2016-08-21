@@ -90,6 +90,6 @@
     "browser_action": {
         "default_icon": "images/dfp-popup.png",
         "default_title": "youtube+ light",
-        "default_popup": "popout.html"
+        "default_popup": "my-scripts/inject/metube.html"
     }
 }
