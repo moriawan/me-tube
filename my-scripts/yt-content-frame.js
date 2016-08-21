@@ -298,8 +298,13 @@ var afterContainer = function(){
 
 ///////////////////////////////////
 
-
-
+sendMessageToInjected = function(messageObject){
+    // var event = document.createEvent('Event');
+    // event.initEvent('metubeEvent');
+    
+    var event = new CustomEvent('metubeEvent', { 'detail': messageObject });
+    document.dispatchEvent(event);
+}
 
 ///////////// run //////////////
 
@@ -331,21 +336,18 @@ var sendResponse = function(){
     return {'type':'acknowledge'}
 }
 
-var onMessageListener = function(message, sender, sendResponse) {
-
+var onMessageListener = function(request, sender, sendResponse) {
     
-    if(message.type == "playerAction"){
+    if(request.type == "playerAction"){
     
-        console.log(message, "atleast show thiss");
+        console.log(request, "do this action");
     
-        switch(message.command) {
+        switch(request.message.command) {
             case "yt-next":
-    
                 var el = document.getElementsByClassName("ytp-next-button")[0];
                 break;
             case "yt-prev":
                 var el = document.getElementsByClassName("ytp-prev-button")[0];
-    
                 if(el.style.display == "none"){
     
                     var prev = history.state["spf-referer"];
@@ -353,13 +355,18 @@ var onMessageListener = function(message, sender, sendResponse) {
                     if(prev.indexOf("youtube.com") > 0)
                         window.history.back();
                 }
-    
                 break;
             case "yt-pause-play":
                 var el = document.getElementsByClassName("ytp-play-button")[0];
-                // sendMessageToInjected("pause play")
                 break;
+            case "yt-seek":
+                console.log("seeking")
+                sendMessageToInjected(request.message)
+                break;
+
         }
+
+        console.log("el", el)
     
         simulateClick(el);
     }
@@ -392,8 +399,3 @@ document.addEventListener("injectedEvent", function(message) {
 
 });
 
-sendMessageToInjected = function(messageObject){
-    var event = document.createEvent('Event');
-    event.initEvent('metubeEvent');
-    document.dispatchEvent(event);
-}

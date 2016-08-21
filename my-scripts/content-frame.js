@@ -15,7 +15,6 @@ function setCommonButtonStyle(buttonElem, param) {
 
 // function pushPlayerController(){
 
-//     // return; 
 
 //     var elem = document.createElement("div");
 //     elem.className = "metube-control";
@@ -163,29 +162,33 @@ function controllerButton() {
 
     param = {
         "type": "playerAction",
-
     }
 
     switch (this.id) {
         case "metube-next-button":
-            param["command"] = "yt-next";
+            param["message"] = {"command" : "yt-next"};
             break;
         case "metube-prev-button":
-            param["command"] = "yt-prev";
+            param["message"] ={"command" : "yt-prev"};
             break;
         case "metube-pause-button":
-            param["command"] = "yt-pause-play";
+            param["message"] = {"command" : "yt-pause-play"};
             break;
         case "metube-play-button":
-            param["command"] = "yt-pause-play";
+            param["message"] = {"command" : "yt-pause-play"};
             break;
 
     }
 
+    playerAction(param);
+
+}
+
+
+function playerAction(command){
     chrome.runtime.sendMessage(param, function(response) {
         console.log(response);
     });
-
 }
 
 
