@@ -161,34 +161,34 @@ var onMessageListener = function(message, sender, sendResponse) {
 
 function controllerButton() {
 
-    param = {
+    request = {
         "type": "playerAction",
 
     }
 
     switch (this.id) {
         case "metube-next-button":
-            param["message"] = {"command" : "yt-next"};
+            request["message"] = {"command" : "yt-next"};
             break;
         case "metube-prev-button":
-            param["message"] ={"command" : "yt-prev"};
+            request["message"] ={"command" : "yt-prev"};
             break;
         case "metube-pause-button":
-            param["message"] = {"command" : "yt-pause-play"};
+            request["message"] = {"command" : "yt-pause-play"};
             break;
         case "metube-play-button":
-            param["message"] = {"command" : "yt-pause-play"};
+            request["message"] = {"command" : "yt-pause-play"};
             break;
 
     }
 
-    playerAction(param);
+    playerAction(request);
 
 }
 
 
-function playerAction(command){
-    chrome.runtime.sendMessage(param, function(response) {
+function playerAction(request){
+    chrome.runtime.sendMessage(request, function(response) {
         console.log(response);
     });
 }
