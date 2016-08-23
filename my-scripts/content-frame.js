@@ -115,17 +115,56 @@ var renderHtml = function() {
 
             var elem = document.createElement("div");
             elem.style.position = 'fixed';
+            elem.style.zIndex = '999999';
             elem.style.bottom = '10px';
-            
+            elem.style.right = '10px';
+            elem.draggable ="true";
+
             var htmlStr = replaceIconPath("play-back-ico", "icons/prevme.png", xhr.responseText);
-                htmlStr = replaceIconPath("play-pause-ico","icons/pauseme.png",htmlStr);
-                htmlStr = replaceIconPath("play-forword-ico","icons/nextme.png",htmlStr);
+            htmlStr = replaceIconPath("play-pause-ico","icons/pauseme.png",htmlStr);
+            htmlStr = replaceIconPath("play-forword-ico","icons/nextme.png",htmlStr);
 
             elem.innerHTML = htmlStr;
 
-            var body = document.getElementsByTagName("body")[0];
+            var oldScreenX = 0;
+            var oldScreenY = 0;
+         
+            param = {
+                "type": "playerButton",
+            }
 
+
+            var body = document.getElementsByTagName("body")[0];
             body.appendChild(elem);
+
+            elem.addEventListener("dragstart", function(ev){
+                
+                oldScreenX = ev.screenX
+                oldScreenY = ev.screenY;
+
+
+            }, false );
+
+
+            elem.addEventListener("dragend", function(ev){
+                
+                var diffX = oldScreenX - ev.screenX; 
+                var diffY = oldScreenY - ev.screenY;
+
+
+                var currRight = ev.srcElement.style.right.replace("px", "");
+                currRight = parseInt(currRight);
+
+
+                var currBottom = ev.srcElement.style.bottom.replace("px", "");
+                currBottom = parseInt(currBottom);
+
+
+                ev.srcElement.style.right = (diffX + currRight) + "px";
+                ev.srcElement.style.bottom = (diffY + currBottom) + "px";
+
+            }, false);
+
 
             // document.getElementById("metube-control").innerHTML = ;
             // console.log(data);
@@ -181,16 +220,22 @@ function controllerButton() {
             break;
 
     }
-
-    playerAction(request);
-
+    propagateInput(request);
 }
 
+// seek to {"command" : "yt-seek", "time" : time}
 
-function playerAction(request){
-    chrome.runtime.sendMessage(request, function(response) {
-        console.log(response);
-    });
+// search + callback {"command" : "yt-search", "query" : query}
+
+function propagateInput(request, callback){
+    if(typeof callback === "undefinedd"){
+        var callback = function(response){
+            console.log("input reponse", response);
+        }
+    }
+
+    chrome.runtime.sendMessage(request, callback());
+
 }
 
 
