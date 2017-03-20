@@ -38,7 +38,7 @@ var playerStatePropagate = setInterval(function() {
 			}
 		}
 
-		sendMessageToMetube(data)
+		sendMessageToMetube(data);
 		// clearInterval(playerStatePropagate);
 	}
 }, 1000);
@@ -48,7 +48,7 @@ var playerStatePropagate = setInterval(function() {
 
 
 document.addEventListener("metubeEvent", function(message) {
-    console.log("message recieved from extension", message)
+    console.log("message recieved from extension", message);
 
     if(message.type == "metubeEvent"){
 	    switch(message.detail.command){
