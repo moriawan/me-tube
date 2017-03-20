@@ -266,14 +266,14 @@ var bindListners = function(){
     // bind buttons
 
     document.getElementById("eow-title").addEventListener("click", function(){
-        
+
         sc.pageChange("left");
 
     }, false );
 
 
     document.getElementById("watch8-sentiment-actions").addEventListener("click", function(){
-        
+
         sc.pageChange("right");
 
     }, false );
@@ -282,12 +282,12 @@ var bindListners = function(){
 var afterContainer = function(){
 
     var params = {
-           childList:true, 
+           childList:true,
            // log:true,
            subtree:true
         }
 
-    var target = document.getElementById("watch7-container")
+    var target = document.getElementById("watch7-container");
     var id = "watch7-main-container";
 
     window.obs = domObserver.newObserver(target, id, params, function(){
@@ -301,7 +301,7 @@ var afterContainer = function(){
 sendMessageToInjected = function(messageObject){
     // var event = document.createEvent('Event');
     // event.initEvent('metubeEvent');
-    
+
     var event = new CustomEvent('metubeEvent', { 'detail': messageObject });
     document.dispatchEvent(event);
 }
@@ -316,7 +316,7 @@ window.sc =  new sidebarController();
 var target = document.getElementsByTagName("body")[0];
 var id = "watch7-container";
 var params = {
-       childList:true, 
+       childList:true,
        subtree:true,
     }
 
@@ -333,15 +333,15 @@ injectScript( chrome.extension.getURL('/my-scripts/inject/command-reader.js'), '
 
 var sendResponse = function(){
 
-    return {'type':'acknowledge'}
+    return {'type':'acknowledge'};
 }
 
 var onMessageListener = function(request, sender, sendResponse) {
-    
+
     if(request.type == "playerAction"){
-    
+
         console.log(request, "do this action");
-    
+
         switch(request.message.command) {
             case "yt-next":
                 var el = document.getElementsByClassName("ytp-next-button")[0];
@@ -349,9 +349,9 @@ var onMessageListener = function(request, sender, sendResponse) {
             case "yt-prev":
                 var el = document.getElementsByClassName("ytp-prev-button")[0];
                 if(el.style.display == "none"){
-    
+
                     var prev = history.state["spf-referer"];
-    
+
                     if(prev.indexOf("youtube.com") > 0)
                         window.history.back();
                 }
@@ -367,7 +367,7 @@ var onMessageListener = function(request, sender, sendResponse) {
         }
 
         console.log("el", el)
-    
+
         simulateClick(el);
     }
 
