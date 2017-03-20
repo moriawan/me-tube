@@ -53,7 +53,6 @@ var renderHtml = function() {
                 "type": "playerButton",
             }
 
-
             var body = document.getElementsByTagName("body")[0];
             body.appendChild(elem);
 
@@ -65,20 +64,16 @@ var renderHtml = function() {
 
             }, false );
 
-
             elem.addEventListener("dragend", function(ev){
                 
                 var diffX = oldScreenX - ev.screenX; 
                 var diffY = oldScreenY - ev.screenY;
 
-
                 var currRight = ev.srcElement.style.right.replace("px", "");
                 currRight = parseInt(currRight);
 
-
                 var currBottom = ev.srcElement.style.bottom.replace("px", "");
                 currBottom = parseInt(currBottom);
-
 
                 ev.srcElement.style.right = (diffX + currRight) + "px";
                 ev.srcElement.style.bottom = (diffY + currBottom) + "px";
