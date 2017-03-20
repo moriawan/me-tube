@@ -13,86 +13,6 @@ function setCommonButtonStyle(buttonElem, param) {
 }
 
 
-// function pushPlayerController(){
-
-
-
-//     var elem = document.createElement("div");
-//     elem.className = "metube-control";
-// document.getElementById("demo").innerHTML
-
-//     elem.style.position = "fixed";
-//     elem.style.width = "500px";
-//     elem.style.height = "50px";
-//     elem.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
-//     elem.style.bottom = "20px";
-//     elem.style.left = "20px";
-//     elem.style.borderRadius= "10px";
-
-
-
-
-//     var playButt = document.createElement("div");
-//     playButt.className = "metube-play-button";
-
-//     setCommonButtonStyle(playButt);
-
-//     playButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/play.png') + "')";
-//     playButt.style.opacity = "0.85"
-
-
-
-//     var pauseButt = document.createElement("div");
-//     pauseButt.className = "metube-pause-button";
-
-//     setCommonButtonStyle(pauseButt);
-
-//     pauseButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/pause.png') + "')";
-//     pauseButt.style.opacity = "0.75"
-//     pauseButt.style.display = "none";
-
-
-
-
-//     var nextButt = document.createElement("div");
-//     nextButt.className = "metube-pause-button";
-
-//     setCommonButtonStyle(nextButt);
-
-//     nextButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/next.png') + "')";
-//     nextButt.style.opacity = "0.9"
-//     nextButt.style.left = "100px";
-//     // nextButt.style.display = "none";
-
-
-
-//     var prevButt = document.createElement("div");
-//     prevButt.className = "metube-pause-button";
-
-//     setCommonButtonStyle(prevButt);
-
-//     prevButt.style.backgroundImage = "url('" + chrome.extension.getURL('../icons/prev.png') + "')";
-//     prevButt.style.opacity = "0.9"
-//     prevButt.style.left = "0px";
-//     // prevButt.style.display = "none";
-
-
-
-
-//     elem.appendChild(playButt);
-//     elem.appendChild(pauseButt);
-//     elem.appendChild(nextButt);
-//     elem.appendChild(prevButt);
-
-
-//     var body = document.getElementsByTagName("body")[0];
-
-//     body.appendChild(elem);
-
-//     console.log(elem);
-
-// }
-
 console.log("in content page");
 
 function replaceIconPath(toReplace, byReplace, str){
@@ -166,6 +86,10 @@ var renderHtml = function() {
             }, false);
 
 
+            elem.querySelectorAll(".metube-button").forEach(function(item, index){
+                item.addEventListener("click", controllerButton);
+            })
+
             // document.getElementById("metube-control").innerHTML = ;
             // console.log(data);
 
@@ -199,7 +123,7 @@ var onMessageListener = function(message, sender, sendResponse) {
 // pushPlayerController();
 
 function controllerButton() {
-
+    // console.log("hello", this.id)
     request = {
         "type": "playerAction",
 
@@ -211,9 +135,6 @@ function controllerButton() {
             break;
         case "metube-prev-button":
             request["message"] ={"command" : "yt-prev"};
-            break;
-        case "metube-pause-button":
-            request["message"] = {"command" : "yt-pause-play"};
             break;
         case "metube-play-button":
             request["message"] = {"command" : "yt-pause-play"};
@@ -229,12 +150,12 @@ function controllerButton() {
 
 function propagateInput(request, callback){
     if(typeof callback === "undefinedd"){
-        var callback = function(response){
+        callback = function(response){
             console.log("input reponse", response);
         }
     }
 
-    chrome.runtime.sendMessage(request, callback());
+    chrome.runtime.sendMessage(request, callback);
 
 }
 

@@ -8,10 +8,10 @@
 	margin-left: 4px;
 	position: relative;
 	width: 300px;
-	height: 57px;
+	height: 20px;
 	background-color: rgba(0, 0, 0, 0.1);
 	/*bottom: 10px;*/
-	border: 3px solid black;
+	/*border: 3px solid black;*/
 }
 
 #metube-control .align-items{
@@ -19,18 +19,21 @@
 	width: 100%;
 }
 
-#metube-control .metube-play-button {
+#metube-control .metube-button {
 	opacity: 1;
-	height: 57px;
+	height: 5px;
 	/*background-image: url('icons/play.png');*/
+}
+.metube-button img{
+	height: 100%;
 }
 </style>
 <div id="metube-control">
 	<div class="align-items">
-	
-	<button  class="btn metube-play-button"><img src="play-back-ico"></button>
-	<button  class="btn metube-play-button"><img src="play-pause-ico"></button>
-	<button  class="btn metube-play-button"><img src="play-forword-ico"></button>
+
+	<button class="btn metube-button" id="metube-prev-button" ><img src="play-back-ico"></button>
+	<button class="btn metube-button" id="metube-play-button" ><img src="play-pause-ico"></button>
+	<button class="btn metube-button" id="metube-next-button" ><img src="play-forword-ico"></button>
 	</div>
 	<div class="align-items">
 	 
