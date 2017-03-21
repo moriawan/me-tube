@@ -31,7 +31,7 @@ var renderHtml = function() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
             //... The content has been read in xhr.responseText
-            console.log(xhr.responseText);
+            // console.log(xhr.responseText);
 
             var elem = document.createElement("div");
             elem.style.position = 'fixed';
@@ -85,11 +85,6 @@ var renderHtml = function() {
                 item.addEventListener("click", controllerButton);
             })
 
-            // document.getElementById("metube-control").innerHTML = ;
-            // console.log(data);
-
-
-
         }
     };
     xhr.send();
@@ -106,8 +101,15 @@ var sendResponse = function() {
 
 var onMessageListener = function(message, sender, sendResponse) {
 
+    var seek = document.querySelector('#metube-control .seek-done');
+    var title = document.querySelector('#metube-control .title');
+
     if (message.type == "propagate") {
-        console.log(message, "propogate obj");
+        console.log(message.message)
+        var elapsed = message.message.current * 200 / message.message.duration;
+        seek.style.width = elapsed + 'px';
+
+        title.innerHTML = message.message.title
     }
 
 }
