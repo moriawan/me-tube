@@ -11,7 +11,7 @@ var dispatchCommand = function(request){
 }
 
 var propogateState = function(request){
-    
+
     chrome.tabs.query({url: "*://*/*"}, function(tabs){
         tabs.forEach(function(tab, index){
             chrome.tabs.sendMessage(tab.id, request, function(){

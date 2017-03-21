@@ -80,11 +80,24 @@ var renderHtml = function() {
 
             }, false);
 
-
             elem.querySelectorAll(".metube-button").forEach(function(item, index){
                 item.addEventListener("click", controllerButton);
             })
 
+            elem.querySelector(".seekbar").addEventListener('mouseup', function(evt){
+                // console.log(evt.layerX, evt.offsetX)
+                controllerSeek(evt.offsetX);
+            })
+
+            elem.querySelector(".seekbar").addEventListener('mouseover', function(){
+                elem.querySelector('.seek-done').style.opacity = '0.6';
+                elem.querySelector(".title").style.display = 'none';
+            })
+
+            elem.querySelector(".seekbar").addEventListener('mouseout', function(){
+                elem.querySelector('.seek-done').style.opacity = '0.2';
+                elem.querySelector(".title").style.display = 'block';
+            })
         }
     };
     xhr.send();
@@ -105,7 +118,7 @@ var onMessageListener = function(message, sender, sendResponse) {
     var title = document.querySelector('#metube-control .title');
 
     if (message.type == "propagate") {
-        console.log(message.message)
+        // console.log(message.message)
         var elapsed = message.message.current * 200 / message.message.duration;
         seek.style.width = elapsed + 'px';
 
@@ -139,6 +152,19 @@ function controllerButton() {
 
     }
     propagateInput(request);
+}
+
+
+function controllerSeek(percent){
+    console.log("control seek", percent);
+    propagateInput({
+        "type": "playerAction",
+        "message": {
+            "command": "yt-seek",
+            "seek_time": percent
+
+        }
+    })
 }
 
 // seek to {"command" : "yt-seek", "time" : time}

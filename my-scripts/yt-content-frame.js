@@ -360,9 +360,9 @@ var onMessageListener = function(request, sender, sendResponse) {
                 var el = document.getElementsByClassName("ytp-play-button")[0];
                 break;
             case "yt-seek":
-                console.log("seeking")
+                console.log("seeking content frame", request)
                 sendMessageToInjected(request.message)
-                break;
+                return;
 
         }
 
