@@ -20,35 +20,24 @@
         // "enable_media_keys": true,
         "yt-next": {
             "suggested_key": {
-
-                "default": "Ctrl+Shift+0",
-                "mac": "Command+Period",
-                // "chromeos": "Ctrl+.",
-                "windows": "Ctrl+Shift+0",
-                "linux": "Ctrl+Shift+0"
+                "default": "Ctrl+Shift+Period",
+                "mac": "Command+Period"
             },
             "description": "youtube next",
             "global": true
         },
         "yt-prev": {
             "suggested_key": {
-
-                "default": "Ctrl+Shift+9",
-                "mac": "Command+Comma",
-                // "chromeos": "Ctrl+,",
-                "windows": "Ctrl+Shift+9",
-                "linux": "Ctrl+Shift+9"
+                "default": "Ctrl+Shift+Comma",
+                "mac": "Command+Comma"
             },
             "description": "youtube previous",
             "global": true
         },
         "yt-pause-play":{
             "suggested_key": {
-                "default": "Ctrl+Shift+8",
-                "mac": "Command+Shift+8",
-                // "chromeos": "Ctrl+Shift+Space",
-                "windows": "Ctrl+Shift+8",
-                "linux": "Ctrl+Shift+8"
+                "default": "Ctrl+Shift+Space",
+                "mac": "Command+Shift+8"
             },
             "description": "youtube pause/play",
             "global": true

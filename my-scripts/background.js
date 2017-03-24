@@ -28,6 +28,8 @@ chrome.topSites.get(function(urlList){
 
 chrome.commands.onCommand.addListener(function(command) {
 
+    console.log("hotkey", command);
+
     dispatchCommand({
         'type':'playerAction',
         'message' : {
