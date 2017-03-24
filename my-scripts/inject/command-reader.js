@@ -8,7 +8,7 @@ onPlayerStateChange = function (state) {
 };
 
 
-sendMessageToMetube = function(messageObject){
+sendMessageToMetube = function(messageObject) {
 	var event = new CustomEvent('injectedEvent', { 'detail': messageObject });
 	document.dispatchEvent(event);
 }
@@ -17,10 +17,19 @@ function dispatchCustomEvent(doc) {
   
 }
 
+var instanceChecker = setInterval(function() {
+	try {
+		// console.log("trying to instansiate");
+		playerRef = yt.player.getPlayerByElement("player-api");
+		playerRef.addEventListener("onStateChange", "onPlayerStateChange");
+		clearInterval(instanceChecker);
+		// console.log("success");
+	} catch (e) {
+		// console.log("failed to instansiate", e)
+	}
 
-playerRef = yt.player.getPlayerByElement("player-api");
+}, 1000)
 
-playerRef.addEventListener("onStateChange", "onPlayerStateChange");
 
 var playerStatePropagate = setInterval(function() {
 	if (playerRef.isReady()) {
@@ -42,9 +51,6 @@ var playerStatePropagate = setInterval(function() {
 		// clearInterval(playerStatePropagate);
 	}
 }, 1000);
-
-
-// metubeEvent
 
 
 document.addEventListener("metubeEvent", function(message) {
